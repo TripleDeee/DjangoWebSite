@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Blog{% endblock %}</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            padding-bottom: 150px;
+        }
+
+        nav {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        nav ul li a:hover {
+            background-color: #555;
+        }
+
+        .content {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 100px;
+            display: none;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .company-info,
+        .social-icons {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        .social-icons img {
+            width: 24px;
+            height: 24px;
+            margin-right: 10px;
+        }
+
+        .social-icons a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .social-icons img:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <ul>
+        <li><a href="{% url 'post_list' %}">Головна</a></li>
+        {% if user.is_authenticated %}
+            <li><a href="{% url 'change_password' %}">Змінити пароль</a></li>
+            <li><a href="{% url 'logout' %}">Вийти ({% if user.is_authenticated %}{{ user.username }}{% endif %})</a></li>
+        {% else %}
+            <li><a href="{% url 'login' %}">Авторизація</a></li>
+            <li><a href="{% url 'register' %}">Реєстрація</a></li>
+        {% endif %}
+    </ul>
+</nav>
+
+<div class="content">
+    {% block content %}{% endblock %}
+</div>
+
+<footer>
+    <div class="footer-content">
+        <div class="company-info">
+            <h4>TripleDe Copmany Interactive</h4>
+            <p>Просто коротка інформація про компанію TripleDe</p>
+        </div>
+
+        <div class="social-icons">
+            <h4>Follow us</h4>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank"><img src="/images/facebook.png" alt="Facebook"></a>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank"><img src="/images/instagram.png" alt="Instagram"></a>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank"><img src="/images/telegram.png" alt="Telegram"></a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    var footer = document.querySelector('footer');
+    var lastKnownScrollPosition = 0;
+    var ticking = false;
+
+    function handleScroll() {
+        lastKnownScrollPosition = window.scrollY;
+
+        if (!ticking) {
+            window.requestAnimationFrame(function() {
+                if (lastKnownScrollPosition >= document.body.scrollHeight - window.innerHeight) {
+                    footer.style.display = 'block';
+                } else {
+                    footer.style.display = 'none';
+                }
+                ticking = false;
+            });
+
+            ticking = true;
+        }
+    }
+
+    window.addEventListener('scroll', handleScroll);
+</script>
+
+</body>
+</html>

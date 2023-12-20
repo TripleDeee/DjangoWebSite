@@ -1,0 +1,148 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <div class="post-list">
+        {% if posts %}
+            {% for post in posts %}
+                <div class="post-summary">
+                    <h2><a href="{% url 'post_detail' post.id %}" class="post-title">{{ post.title }}</a></h2>
+                    <p class="post-content">{{ post.content|truncatechars:200 }}</p>
+                    <p class="post-meta">
+                        <span class="post-author">Автор: {{ post.author.username }}</span>
+                        <span class="post-date">Створений: {{ post.created_at }}</span>
+                    </p>
+                    <button class="read-more-btn" data-content="{{ post.content }}">Read more</button>
+                    <hr>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Постів на даний час немає.</p>
+        {% endif %}
+    </div>
+
+    <div id="full-content-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="full-content-text"></div>
+        </div>
+    </div>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding-bottom: 150px;
+            background-color: #f5f5f5;
+        }
+
+        .post-list {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .post-summary {
+            margin-bottom: 30px;
+        }
+
+        .post-title {
+            color: #333;
+            text-decoration: none;
+        }
+
+        .post-title:hover {
+            text-decoration: underline;
+        }
+
+        .post-content {
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .post-meta {
+            margin-top: 10px;
+            color: #777;
+        }
+
+        .post-author,
+        .post-date {
+            margin-right: 20px;
+        }
+
+        .read-more-btn {
+            background: none;
+            border: none;
+            color: #4caf50;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+        }
+
+        .modal-content {
+            margin: 10% auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #333;
+            text-decoration: none;
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var readMoreBtns = document.querySelectorAll('.read-more-btn');
+            var modal = document.getElementById('full-content-modal');
+            var fullContentText = document.getElementById('full-content-text');
+
+            readMoreBtns.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var content = this.getAttribute('data-content');
+                    fullContentText.innerHTML = content;
+                    modal.style.display = 'block';
+                });
+            });
+
+            var closeModalBtn = document.querySelector('.close');
+            closeModalBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+    </script>
+{% endblock %}

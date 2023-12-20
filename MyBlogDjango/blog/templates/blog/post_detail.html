@@ -1,0 +1,146 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <div class="post-detail">
+        <h2>{{ post.title }}</h2>
+        <p class="post-info">
+            Автор: {{ post.author.username }} ({{ post.author.email }}) <br>
+            Створений: {{ post.created_at }}
+        </p>
+        <p class="post-content">{{ post.content }}</p>
+        <p class="post-info">Лайків: {{ likes_count }}</p>
+        <div class="button-container">
+            <a href="{% url 'like_post' post.id %}" class="btn btn-primary like-button">Like</a>
+        </div>
+        <hr>
+
+        <div class="add-comment">
+            <h3>Додати коментар</h3>
+            <form method="post" action="{% url 'add_comment' post.id %}" class="comment-form">
+                {% csrf_token %}
+                {{ form.content.errors|striptags }}
+                {{ form.content }}
+                <button type="submit" class="btn btn-primary" onclick="return validateComment()">Додати коментар</button>
+            </form>
+        </div>
+
+        <h3 id="comments-header" style="cursor: pointer;">Коментарі ({{ post.comment_set.count }})</h3>
+        <div id="comments" style="display: none;">
+            {% for comment in post.comment_set.all %}
+                <div class="comment">
+                    <p class="comment-info">
+                        <span class="comment-author">{{ comment.author.username }} ({{ comment.author.email }})</span>
+                        <br>
+                        <span class="comment-date">{{ comment.created_at|date:"F d, Y H:i" }}</span>
+                    </p>
+                    <p class="comment-text">{{ comment.content }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        <hr>
+    </div>
+
+    <script>
+        var commentsHeader = document.getElementById('comments-header');
+        var commentsContainer = document.getElementById('comments');
+
+        commentsHeader.addEventListener('click', function() {
+            if (commentsContainer.style.display === 'none') {
+                commentsContainer.style.display = 'block';
+            } else {
+                commentsContainer.style.display = 'none';
+            }
+        });
+    </script>
+
+    <style>
+        .post-detail {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .post-content {
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+
+        .post-info {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .button-container {
+            text-align: right;
+        }
+
+        .like-button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .like-button:hover {
+            background-color: #45a049;
+        }
+
+        .btn-primary {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            background-color: #45a049;
+        }
+
+        .comment-form {
+            max-width: 400px;
+            margin-top: 10px;
+        }
+
+        .comment-form textarea {
+            font-family: 'Arial', sans-serif;
+            resize: vertical;
+        }
+
+        .comment {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .comment-info {
+            font-size: 0.9em;
+            color: #777;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .comment-author {
+            font-weight: bold;
+        }
+
+        .comment-date {
+            margin-top: 5px;
+        }
+
+        .comment-text {
+            margin-top: 10px;
+            font-family: 'Arial', sans-serif;
+        }
+    </style>
+{% endblock %}

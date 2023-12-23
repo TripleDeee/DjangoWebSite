@@ -176,7 +176,6 @@
 </nav>
 
 <div class="content">
-    {% block content %}{% endblock %}
     {% if messages %}
         <ul class="messages">
             {% for message in messages %}
@@ -184,6 +183,7 @@
             {% endfor %}
         </ul>
     {% endif %}
+    {% block content %}{% endblock %}
 </div>
 
 <footer>

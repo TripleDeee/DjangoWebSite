@@ -3,11 +3,11 @@
 {% block content %}
     <div class="post-detail">
         <h2>{{ post.title }}</h2>
+        <p class="post-content">{{ post.content }}</p>
         <p class="post-info">
             Автор: {{ post.author.username }} ({{ post.author.email }}) <br>
             Створений: {{ post.created_at }}
         </p>
-        <p class="post-content">{{ post.content }}</p>
         <p class="post-info">Лайків: {{ likes_count }}</p>
         <div class="button-container">
             <a href="{% url 'like_post' post.id %}" class="btn btn-primary like-button">Like</a>
@@ -69,7 +69,7 @@
         }
         .post-info {
             font-style: italic;
-            color: #555;
+            color: #000;
         }
 
         .comments {

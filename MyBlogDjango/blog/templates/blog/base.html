@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -142,9 +143,9 @@
 
         <div class="social-icons">
             <h4>Follow us</h4>
-            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank"><img src="/images/facebook.png" alt="Facebook"></a>
-            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank"><img src="/images/instagram.png" alt="Instagram"></a>
-            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank"><img src="/images/telegram.png" alt="Telegram"></a>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank"><img src="{% static 'images/facebook.png' %}" alt="Facebook"></a>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank"><img src="{% static 'images/instagram.png' %}" alt="Instagram"></a>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank"><img src="{% static 'images/telegram.png' %}" alt="Telegram"></a>
         </div>
     </div>
 </footer>

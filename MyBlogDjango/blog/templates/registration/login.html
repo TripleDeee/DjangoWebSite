@@ -2,8 +2,9 @@
 {% load static %}
 
 {% block content %}
-    <h1 style="text-align: center;">Авторизація</h1>
     <div class="container">
+        <br>
+        <h1>Авторизація</h1>
         <form method="post" action="{% url 'login' %}" class="login-form">
             {% csrf_token %}
             <div class="form-group">
@@ -21,13 +22,20 @@
     </div>
 
     <style>
+        h1 {
+            text-align: center;
+            color: white;
+        }
+
         .container {
-            margin-left: 20px;
-            height: 300px;
+            height: 400px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+
         }
 
         .login-form {
-            margin: 20px auto;
+            margin: auto;
             max-width: 300px;
             background-color: #fff;
             padding: 20px;

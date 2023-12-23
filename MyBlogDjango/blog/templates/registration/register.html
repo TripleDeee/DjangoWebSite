@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-    <h1 style="text-align: center;">Реєстрація</h1>
+    <h1>Реєстрація</h1>
     {% if messages %}
         <div class="messages">
             {% for message in messages %}
@@ -15,7 +15,7 @@
     <form method="post" action="{% url 'register' %}" class="register-form">
         {% csrf_token %}
         <div class="form-group">
-            <label for="username">Username:</label>
+            <label for="username">Ім'я користувача:</label>
             <input type="text" id="username" name="username" class="form-control" required>
             {% if form.username.errors %}
                 <div class="error">{{ form.username.errors.0 }}</div>
@@ -23,7 +23,7 @@
         </div>
 
         <div class="form-group">
-            <label for="email">Email:</label>
+            <label for="email">Електронна адреса:</label>
             <input type="email" id="email" name="email" class="form-control" required>
             {% if form.email.errors %}
                 <div class="error">{{ form.email.errors.0 }}</div>
@@ -31,7 +31,7 @@
         </div>
 
         <div class="form-group">
-            <label for="password1">Password:</label>
+            <label for="password1">Пароль:</label>
             <input type="password" id="password1" name="password1" class="form-control" required>
             {% if form.password1.errors %}
                 <div class="error">{{ form.password1.errors.0 }}</div>
@@ -39,17 +39,22 @@
         </div>
 
         <div class="form-group">
-            <label for="password2">Confirm Password:</label>
+            <label for="password2">Повторний пароль:</label>
             <input type="password" id="password2" name="password2" class="form-control" required>
             {% if form.password2.errors %}
                 <div class="error">{{ form.password2.errors.0 }}</div>
             {% endif %}
         </div>
 
-        <button type="submit" class="btn btn-primary">Register</button>
+        <button type="submit" class="btn btn-primary">Зареєструватись</button>
     </form>
 
     <style>
+        h1 {
+            text-align: center;
+            color: white;
+        }
+
         .register-form {
             margin: 20px auto;
             max-width: 300px;

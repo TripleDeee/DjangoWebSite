@@ -10,6 +10,7 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 from .forms import EmailUserCreationForm
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.contrib.auth.forms import AuthenticationForm
 
 def logout_view(request):
     logout(request)
@@ -21,27 +22,31 @@ def change_password(request):
         if form.is_valid():
             user = form.save()
             update_session_auth_hash(request, user)
-            messages.success(request, 'Your password was successfully updated!')
-            return redirect('change_password')
+            messages.success(request, 'Пароль успішно змінено.')
+            return redirect('change_password.html')
         else:
-            messages.error(request, 'Please correct the error below.')
+            messages.error(request, 'Будь ласка, виправте помилки в формі.')
     else:
         form = PasswordChangeForm(request.user)
+
     return render(request, 'registration/change_password.html', {'form': form})
+
 
 
 def user_login(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
+        form = AuthenticationForm(request, request.POST)
+        if form.is_valid():
+            user = form.get_user()
             login(request, user)
             messages.success(request, 'You have successfully logged in!')
             return redirect('post_list')
         else:
             messages.error(request, 'Invalid login credentials. Please try again.')
-    return render(request, 'registration/login.html')
+    else:
+        form = AuthenticationForm()
+
+    return render(request, 'registration/login.html', {'form': form})
 
 
 def post_list(request):

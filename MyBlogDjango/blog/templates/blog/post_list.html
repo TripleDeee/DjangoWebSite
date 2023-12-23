@@ -7,6 +7,7 @@
                 <div class="post-summary">
                     <h2><a href="{% url 'post_detail' post.id %}" class="post-title">{{ post.title }}</a></h2>
                     <p class="post-content">{{ post.content|truncatechars:200 }}</p>
+                    <br>
                     <p class="post-meta">
                         <span class="post-author">Автор: {{ post.author.username }}</span>
                         <span class="post-date">Створений: {{ post.created_at }}</span>
@@ -22,13 +23,13 @@
     <div class="pagination">
         <span class="step-links">
             {% if posts.has_previous %}
-                <a href="?page={{ posts.previous_page_number }}">Предыдущая</a>
+                <a href="?page={{ posts.previous_page_number }}">Попередня</a>
             {% endif %}
 
-            <span class="current">Страница {{ posts.number }} из {{ posts.paginator.num_pages }}</span>
+            <span class="current">Сторінка {{ posts.number }} із {{ posts.paginator.num_pages }}</span>
 
             {% if posts.has_next %}
-                <a href="?page={{ posts.next_page_number }}">Следующая</a>
+                <a href="?page={{ posts.next_page_number }}">Наступна</a>
             {% endif %}
         </span>
     </div>
@@ -51,6 +52,7 @@
             max-width: 800px;
             margin: 20px auto;
             padding: 20px;
+            background-color: rgba(255, 0, 0, 0.5);
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
         }

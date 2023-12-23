@@ -12,8 +12,10 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
             padding-bottom: 150px;
+            background-image: url('{% static "images/background_icon.png" %}');
+            background-size: cover;
+            background-repeat: no-repeat;
         }
 
         nav {
@@ -51,7 +53,9 @@
             max-width: 600px;
             margin: 20px auto;
             padding: 20px;
-            background-color: #fff;
+            background-color: #553725;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         h2 {
@@ -60,6 +64,9 @@
 
         form {
             margin-top: 20px;
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #fefedc;
         }
 
         button {
@@ -142,10 +149,10 @@
         </div>
 
         <div class="social-icons">
-            <h4>Follow us</h4>
-            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank"><img src="{% static 'images/facebook.png' %}" alt="Facebook"></a>
-            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank"><img src="{% static 'images/instagram.png' %}" alt="Instagram"></a>
-            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank"><img src="{% static 'images/telegram.png' %}" alt="Telegram"></a>
+            <h4>Де нас можна знайти</h4>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank"><img src="{% static 'images/facebook_icon.png' %}" alt="Facebook"></a>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank"><img src="{% static 'images/instagram_icon.png' %}" alt="Instagram"></a>
+            <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank"><img src="{% static 'images/telegram_icon.png' %}" alt="Telegram"></a>
         </div>
     </div>
 </footer>

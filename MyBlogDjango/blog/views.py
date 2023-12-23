@@ -3,13 +3,13 @@ from django.contrib.auth.decorators import login_required
 from .models import Post, Comment, Like
 from .forms import CommentForm
 from django.urls import reverse
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 from .forms import EmailUserCreationForm
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def logout_view(request):
     logout(request)
@@ -43,8 +43,23 @@ def user_login(request):
             messages.error(request, 'Invalid login credentials. Please try again.')
     return render(request, 'registration/login.html')
 
+
 def post_list(request):
-    posts = Post.objects.all().order_by('-created_at')
+    posts_list = Post.objects.all().order_by('-created_at')
+
+    # Добавим пагинацию, чтобы отображать по 3 поста на каждой странице
+    paginator = Paginator(posts_list, 3)
+    page = request.GET.get('page')
+
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        # Если параметр страницы не является целым числом, отображаем первую страницу
+        posts = paginator.page(1)
+    except EmptyPage:
+        # Если страница вне диапазона (например, 9999), отображаем последнюю страницу
+        posts = paginator.page(paginator.num_pages)
+
     return render(request, 'blog/post_list.html', {'posts': posts})
 
 

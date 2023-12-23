@@ -19,7 +19,19 @@
             <p>Постів на даний час немає.</p>
         {% endif %}
     </div>
+    <div class="pagination">
+        <span class="step-links">
+            {% if posts.has_previous %}
+                <a href="?page={{ posts.previous_page_number }}">Предыдущая</a>
+            {% endif %}
 
+            <span class="current">Страница {{ posts.number }} из {{ posts.paginator.num_pages }}</span>
+
+            {% if posts.has_next %}
+                <a href="?page={{ posts.next_page_number }}">Следующая</a>
+            {% endif %}
+        </span>
+    </div>
     <div id="full-content-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -45,32 +57,36 @@
         }
 
         .post-summary {
-            margin-bottom: 30px;
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .post-summary:hover {
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
         }
 
         .post-title {
             color: #333;
             text-decoration: none;
-        }
-
-        .post-title:hover {
-            text-decoration: underline;
+            font-size: 30px;
+            margin-bottom: 10px;
         }
 
         .post-content {
             font-size: 1.2em;
             line-height: 1.6;
             color: #555;
+            margin-bottom: 10px;
         }
 
         .post-meta {
             margin-top: 10px;
             color: #777;
-        }
-
-        .post-author,
-        .post-date {
-            margin-right: 20px;
+            display: flex;
+            justify-content: space-between;
         }
 
         .read-more-btn {
@@ -81,6 +97,11 @@
             text-decoration: underline;
             padding: 0;
             margin-top: 10px;
+        }
+
+        .post-author,
+        .post-date {
+            margin-right: 20px;
         }
 
         .modal {
@@ -116,6 +137,37 @@
         .close:focus {
             color: #333;
             text-decoration: none;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .step-links {
+            display: flex;
+            list-style: none;
+            padding: 0;
+        }
+
+        .step-links a,
+        .current {
+            padding: 8px 16px;
+            margin: 0 4px;
+            text-decoration: none;
+            background-color: #4CAF50;
+            color: #fff;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .step-links a:hover {
+            background-color: #45a049;
+        }
+
+        .current {
+            background-color: #45a049;
         }
     </style>
 

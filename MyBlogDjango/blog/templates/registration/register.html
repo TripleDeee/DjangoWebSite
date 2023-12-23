@@ -3,26 +3,47 @@
 
 {% block content %}
     <h1 style="text-align: center;">Реєстрація</h1>
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="{% if message.tags %}alert alert-{{ message.tags }}{% endif %}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
     <form method="post" action="{% url 'register' %}" class="register-form">
         {% csrf_token %}
         <div class="form-group">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" class="form-control" required>
+            {% if form.username.errors %}
+                <div class="error">{{ form.username.errors.0 }}</div>
+            {% endif %}
         </div>
 
         <div class="form-group">
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" class="form-control" required>
+            {% if form.email.errors %}
+                <div class="error">{{ form.email.errors.0 }}</div>
+            {% endif %}
         </div>
 
         <div class="form-group">
             <label for="password1">Password:</label>
             <input type="password" id="password1" name="password1" class="form-control" required>
+            {% if form.password1.errors %}
+                <div class="error">{{ form.password1.errors.0 }}</div>
+            {% endif %}
         </div>
 
         <div class="form-group">
             <label for="password2">Confirm Password:</label>
             <input type="password" id="password2" name="password2" class="form-control" required>
+            {% if form.password2.errors %}
+                <div class="error">{{ form.password2.errors.0 }}</div>
+            {% endif %}
         </div>
 
         <button type="submit" class="btn btn-primary">Register</button>
@@ -65,6 +86,35 @@
 
         .btn-primary:hover {
             background-color: #45a049;
+        }
+
+        .messages {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .messages p {
+            margin: 0;
+            padding: 5px;
+        }
+
+        .messages p.error {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+
+        .messages p.success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+        .error {
+            color: red;
+            margin-top: 5px;
         }
     </style>
 {% endblock %}

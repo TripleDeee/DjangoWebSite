@@ -47,17 +47,14 @@ def user_login(request):
 def post_list(request):
     posts_list = Post.objects.all().order_by('-created_at')
 
-    # Добавим пагинацию, чтобы отображать по 3 поста на каждой странице
     paginator = Paginator(posts_list, 3)
     page = request.GET.get('page')
 
     try:
         posts = paginator.page(page)
     except PageNotAnInteger:
-        # Если параметр страницы не является целым числом, отображаем первую страницу
         posts = paginator.page(1)
     except EmptyPage:
-        # Если страница вне диапазона (например, 9999), отображаем последнюю страницу
         posts = paginator.page(paginator.num_pages)
 
     return render(request, 'blog/post_list.html', {'posts': posts})
